@@ -109,8 +109,8 @@ jobs:
             
             - name: Deploy Flask app to EKS
               run: |
-                kubectl apply -f k8s/deployment.yaml
-                kubectl apply -f k8s/service.yaml
+                kubectl apply -f eks_deploy/deployment.yaml
+                kubectl apply -f eks_deploy/service.yaml
             
             - name: Confirm Deployment
               id: confirm_deployment
