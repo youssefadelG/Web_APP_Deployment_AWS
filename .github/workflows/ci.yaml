@@ -107,10 +107,29 @@ jobs:
                 echo "KUBECONFIG=$KUBECONFIG" >> $GITHUB_ENV
                 cat $KUBECONFIG
             
+            - name: Install Helm
+              run: |
+                curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3.sh | bash
+            
+            - name: Add Helm repository for Prometheus
+              run: |
+                helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+                helm repo update
+
+            - name: Add Helm repository
+              run: |
+                helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
+                --namespace monitoring --create-namespace \
+                --set grafana.enabled=true \
+                --set alertmanager.enabled=false \
+                --set kubeStateMetrics.enabled=true \
+                --set nodeExporter.enabled=true
+
             - name: Deploy Flask app to EKS
               run: |
                 kubectl apply -f eks_deploy/deployment.yaml
-                kubectl apply -f eks_deploy/service.yaml
+                kubectl apply -f eks_deploy/loadbalancer.yaml
+                kubectl apply -f eks_deploy/appmonitor.yaml
             
             - name: Confirm Deployment
               id: confirm_deployment
