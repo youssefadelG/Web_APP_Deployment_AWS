@@ -121,6 +121,8 @@ jobs:
                 helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
                 --namespace monitoring --create-namespace \
                 --set grafana.enabled=true \
+                --set grafana.service.type=LoadBalancer \
+                --set prometheus.service.type=LoadBalancer \
                 --set alertmanager.enabled=false \
                 --set kubeStateMetrics.enabled=true \
                 --set nodeExporter.enabled=true
