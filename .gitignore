@@ -1,0 +1,26 @@
+# Terraform Files
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+*.tfplan
+*.tfplan.*
+.terraform.tfstate.lock.info
+
+# AWS credentials
+.aws/
+credentials
+config
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
