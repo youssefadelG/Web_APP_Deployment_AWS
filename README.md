@@ -322,7 +322,7 @@ The monitoring setup provides comprehensive observability for both the applicati
 ### Monitoring Snippets
 You should see something like this:
 
-![alt text](snippets/prom_targets.png)
+<img width="1875" height="844" alt="image" src="https://github.com/user-attachments/assets/c8385a49-f86c-4b38-b902-8c39a0f9804c" />
 
 ![alt text](snippets/all_dashboards.png)
 
