@@ -137,6 +137,11 @@ jobs:
               id: confirm_deployment
               run: |
                 kubectl rollout status deployment/flask-app-dev
+
+            - name: Get LoadBalancers URLs
+              run: |
+                kubectl get svc -A -o jsonpath='{range .items[*]}{.metadata.name}: {.status.loadBalancer.ingress[*].hostname}{"\n"}{end}' | grep elb
+
             
             - name: Rollback in case of Deployment failure
               if: ${{ steps.confirm_deployment.outcome == 'failure' }}
