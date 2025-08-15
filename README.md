@@ -217,7 +217,9 @@ After successful deployment:
   - GET /users/{id} - Retrieve specific user
   - GET /products - Retrieve all products
   - GET /products/{id} - Retrieve specific product
-  - GET /metrics - Prometheus metrics endpoint
+  - GET /metrics - Prometheus metrics 
+
+![alt text](snippets/web_app.png)
 
 ## Pipeline Explanation
 
