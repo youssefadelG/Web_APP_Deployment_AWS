@@ -259,7 +259,8 @@ The CI/CD pipeline consists of three main jobs that run sequentially:
   5. Deploys Prometheus and Grafana monitoring stack
   6. Deploys Flask application to Kubernetes
   7. Verifies deployment status
-  8. Implements automatic rollback on failure
+  9. Provides elbs urls for ease of access
+  10. Implements automatic rollback on failure
 - **Dependencies**: BuildImage-and-Publish-to-DockerHub job
 
 ### Pipeline Features
@@ -321,16 +322,12 @@ The monitoring setup provides comprehensive observability for both the applicati
 ### Monitoring Snippets
 You should see something like this:
 
-![alt text](snippets/Prom_targets.png)
+![alt text](snippets/prom_targets.png)
 
 ![alt text](snippets/all_dashboards.png)
 
 ![alt text](snippets/Flask_app_dashboard.png)
 
 ![alt text](snippets/api_server_dashboard.png)
-
-![alt text]({67C69C39-B425-4E11-8D5B-127791561992}.png)
-
-![alt text]({881CC27C-66F1-43AA-96E9-932D5ED658EC}.png)
 
 ![alt text](snippets/worker_node_dashboard.png)
