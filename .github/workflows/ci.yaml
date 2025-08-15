@@ -126,6 +126,10 @@ jobs:
                 --set alertmanager.enabled=false \
                 --set kubeStateMetrics.enabled=true \
                 --set nodeExporter.enabled=true
+            
+            - name: Port Forward Prometheus
+              run: |
+                kubectl port-forward svc/monitoring-kube-prometheus-prometheus 9090 -n monitoring &
 
             - name: Deploy Flask app to EKS
               run: |
