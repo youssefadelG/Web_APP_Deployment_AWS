@@ -1,3 +1,4 @@
 Flask==2.2.2
 ## package required to import url_quote from werkzeug.urls
 Werkzeug==2.2.2
+prometheus-flask-exporter==0.23.2

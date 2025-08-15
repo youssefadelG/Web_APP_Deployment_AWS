@@ -107,15 +107,41 @@ jobs:
                 echo "KUBECONFIG=$KUBECONFIG" >> $GITHUB_ENV
                 cat $KUBECONFIG
             
+            - name: Install Helm
+              run: |
+                curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+            
+            - name: Add Helm repository for Prometheus
+              run: |
+                helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+                helm repo update
+
+            - name: Add Helm repository
+              run: |
+                helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
+                --namespace monitoring --create-namespace \
+                --set grafana.enabled=true \
+                --set grafana.service.type=LoadBalancer \
+                --set prometheus.service.type=LoadBalancer \
+                --set alertmanager.enabled=false \
+                --set kubeStateMetrics.enabled=true \
+                --set nodeExporter.enabled=true
+
             - name: Deploy Flask app to EKS
               run: |
                 kubectl apply -f eks_deploy/deployment.yaml
-                kubectl apply -f eks_deploy/service.yaml
+                kubectl apply -f eks_deploy/loadbalancer.yaml
+                kubectl apply -f eks_deploy/appmonitor.yaml
             
             - name: Confirm Deployment
               id: confirm_deployment
               run: |
                 kubectl rollout status deployment/flask-app-dev
+
+            - name: Get LoadBalancers URLs
+              run: |
+                kubectl get svc -A -o jsonpath='{range .items[*]}{.metadata.name}: {.status.loadBalancer.ingress[*].hostname}{"\n"}{end}' | grep elb
+
             
             - name: Rollback in case of Deployment failure
               if: ${{ steps.confirm_deployment.outcome == 'failure' }}
